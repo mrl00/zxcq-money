@@ -724,6 +724,49 @@ impl IdempotencyRepository for MockIdempotencyRepository {
     }
 }
 
+// ── AuditLogger mock ─────────────────────────────────────────────
+
+use crate::shared::audit::{AuditEntry, AuditLogger};
+use crate::shared::errors::PublishError;
+
+/// In-memory mock for [`AuditLogger`]. Stores entries in a `Vec`.
+pub struct MockAuditLogger {
+    entries: Mutex<Vec<AuditEntry>>,
+}
+
+impl MockAuditLogger {
+    /// Creates a new empty mock.
+    pub fn new() -> Self {
+        Self {
+            entries: Mutex::new(Vec::new()),
+        }
+    }
+
+    /// Returns all recorded audit entries.
+    pub fn entries(&self) -> Vec<AuditEntry> {
+        self.entries.lock().unwrap().clone()
+    }
+
+    /// Returns the number of recorded entries.
+    pub fn count(&self) -> usize {
+        self.entries.lock().unwrap().len()
+    }
+}
+
+impl Default for MockAuditLogger {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+#[async_trait::async_trait]
+impl AuditLogger for MockAuditLogger {
+    async fn log(&self, entry: AuditEntry) -> Result<(), PublishError> {
+        self.entries.lock().unwrap().push(entry);
+        Ok(())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -859,48 +902,5 @@ mod tests {
         repo.delete(bill.id).await.unwrap();
         let found = repo.find_by_id(bill.id).await.unwrap();
         assert!(found.is_none());
-    }
-}
-
-// ── AuditLogger mock ─────────────────────────────────────────────
-
-use crate::shared::audit::{AuditEntry, AuditLogger};
-use crate::shared::errors::PublishError;
-
-/// In-memory mock for [`AuditLogger`]. Stores entries in a `Vec`.
-pub struct MockAuditLogger {
-    entries: Mutex<Vec<AuditEntry>>,
-}
-
-impl MockAuditLogger {
-    /// Creates a new empty mock.
-    pub fn new() -> Self {
-        Self {
-            entries: Mutex::new(Vec::new()),
-        }
-    }
-
-    /// Returns all recorded audit entries.
-    pub fn entries(&self) -> Vec<AuditEntry> {
-        self.entries.lock().unwrap().clone()
-    }
-
-    /// Returns the number of recorded entries.
-    pub fn count(&self) -> usize {
-        self.entries.lock().unwrap().len()
-    }
-}
-
-impl Default for MockAuditLogger {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-#[async_trait::async_trait]
-impl AuditLogger for MockAuditLogger {
-    async fn log(&self, entry: AuditEntry) -> Result<(), PublishError> {
-        self.entries.lock().unwrap().push(entry);
-        Ok(())
     }
 }
