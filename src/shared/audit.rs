@@ -1,18 +1,20 @@
-//! Audit logging infrastructure.
-//!
-//! Provides the [`AuditLogger`] port and [`AuditEntry`] struct for recording
-//! who did what, when, and on which resource. The event-driven approach
-//! uses [`AuditEventHandler`] to automatically convert domain events into
-//! audit entries — no handler changes required.
-//!
-//! # Architecture
-//!
-//! ```text
-//! Handler → EventPublisher → AuditEventHandler → AuditLogger
-//! ```
-//!
-//! The [`AuditableEvent`](super::events::AuditableEvent) wrapper pairs
-//! each domain event with the [`UserID`] of the actor who triggered it.
+/*!
+Audit logging infrastructure.
+
+Provides the [`AuditLogger`] port and [`AuditEntry`] struct for recording
+who did what, when, and on which resource. The event-driven approach
+uses [`AuditEventHandler`] to automatically convert domain events into
+audit entries — no handler changes required.
+
+# Architecture
+
+```text
+Handler → EventPublisher → AuditEventHandler → AuditLogger
+```
+
+The [`AuditableEvent`](super::events::AuditableEvent) wrapper pairs
+each domain event with the [`UserID`] of the actor who triggered it.
+*/
 
 use std::sync::{Arc, Mutex};
 
@@ -296,7 +298,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_auditEventHandler_buffer_and_flush() {
+    async fn test_audit_event_handler_buffer_and_flush() {
         use crate::ledger::domain::events::TransactionRecorded;
         use crate::shared::events::{EventPublisher, InMemoryEventDispatcher};
         use crate::shared::money::{Currency, Money};
@@ -335,7 +337,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_auditEventHandler_multiple_events() {
+    async fn test_audit_event_handler_multiple_events() {
         use crate::ledger::domain::events::{AccountOpened, TransactionRecorded};
         use crate::shared::events::{EventPublisher, InMemoryEventDispatcher};
         use crate::shared::money::{Currency, Money};

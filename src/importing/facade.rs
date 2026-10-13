@@ -10,16 +10,18 @@ use crate::provider::id::IdGenerator;
 use crate::shared::errors::ImportError;
 use crate::shared::events::EventPublisher;
 
-/// Facade for the Importing bounded context.
-///
-/// Aggregates preview, match-candidates, and confirm handlers behind a
-/// single entry point. Frontends use this to orchestrate the import flow:
-///
-/// ```text
-/// 1. preview()      → detect duplicates
-/// 2. match_candidates() → find fuzzy matches
-/// 3. confirm()      → create transactions in the ledger
-/// ```
+/**
+Facade for the Importing bounded context.
+
+Aggregates preview, match-candidates, and confirm handlers behind a
+single entry point. Frontends use this to orchestrate the import flow:
+
+```text
+1. preview()      → detect duplicates
+2. match_candidates() → find fuzzy matches
+3. confirm()      → create transactions in the ledger
+```
+*/
 pub struct ImportingFacade<
     A: AccountRepository,
     T: TransactionRepository,
