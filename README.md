@@ -1,11 +1,11 @@
-# zxc-money
+# zxcq-money
 
 A pure-Rust personal finance core library built with Domain-Driven Design (DDD). Designed as a modular monolith consumed by any frontend (TUI, web, mobile) via well-defined ports/traits — the core knows nothing about HTTP, terminals, or UI frameworks.
 
 ## Architecture
 
 ```
-zxc-money (lib crate)
+zxcq-money (lib crate)
 ├── shared/          → Value objects, error types, event system, ID types, mocks, audit
 ├── provider/        → Port traits for ID generation and datetime
 ├── identity/        → User aggregate, authentication, password hashing (Argon2)
@@ -33,6 +33,7 @@ module/
 ```
 
 **Key principles:**
+
 - All money amounts use `rust_decimal::Decimal` via the `Money` wrapper (no floating-point)
 - Cross-module communication via domain events (never direct repository access)
 - Errors are exhaustive enums (`thiserror`) — frontends use `match`, no string parsing
@@ -45,7 +46,7 @@ module/
 
 ```toml
 [dependencies]
-zxc-money = { path = "../zxc-money" }
+zxcq-money = { path = "../zxcq-money" }
 ```
 
 ### Create an Account
@@ -270,7 +271,7 @@ println!("Net:    {}", result.net);
 ### Ledger
 
 | Aggregate | Key Fields | Invariants |
-|-----------|-----------|------------|
+| ----------- | ----------- | ------------ |
 | **Account** | id, owner_id, name, type, currency, opening_balance | name non-empty, currency matches balance |
 | **Transaction** | id, account_id, type, amount, description, date, category_id, tags | amount > 0, transfers require counterpart, income/expense require category |
 | **RecurringTransaction** | id, owner_id, account_id, type, amount, frequency, next_date, active | same as Transaction, cannot be Transfer |
@@ -282,7 +283,7 @@ println!("Net:    {}", result.net);
 ### Credit Card
 
 | Aggregate | Key Fields | Invariants |
-|-----------|-----------|------------|
+| ----------- | ----------- | ------------ |
 | **CreditCard** | id, owner_id, name, brand, limit, closing_day, due_day | — |
 | **Invoice** | id, credit_card_id, reference_month, purchases[], status | Open→Closed→Paid state machine |
 | **Purchase** | id, description, total_amount, installments_count, category_id, purchased_at | — |
@@ -302,14 +303,14 @@ println!("Net:    {}", result.net);
 ### Budgeting
 
 | Aggregate | Key Fields | Invariants |
-|-----------|-----------|------------|
+| ----------- | ----------- | ------------ |
 | **Budget** | id, owner_id, category_id, period, planned_amount | — |
 | **FinancialGoal** | id, owner_id, name, target_amount, current_amount, target_date, status | can only contribute to InProgress goals, auto-achieves when current ≥ target |
 
 ### Investment
 
 | Aggregate | Key Fields | Invariants |
-|-----------|-----------|------------|
+| ----------- | ----------- | ------------ |
 | **Portfolio** | id, owner_id, positions[] | weighted average cost on buy, validates quantity on sell |
 | **Asset** | id, ticker, name, class, currency | — |
 
@@ -320,7 +321,7 @@ println!("Net:    {}", result.net);
 Pure calculation functions, no aggregates or persistence:
 
 | Function | Description |
-|----------|-------------|
+| ---------- | ------------- |
 | `simulate_loan(principal, months, rate)` | French amortization schedule |
 | `simulate_mortgage(principal, months, rate, SAC\|Price)` | SAC (constant principal) or Price (constant payment) |
 | `simulate_retirement(savings, monthly, years, return)` | Year-by-year projection |
@@ -388,7 +389,7 @@ match result {
 15 type-safe ID wrappers (UUID v4) via `define_id!` macro:
 
 | Type | Module |
-|------|--------|
+| ------ | -------- |
 | `AccountID`, `TransactionID`, `CategoryID`, `TagID` | Ledger |
 | `RecurringTransactionID` | Ledger |
 | `CreditCardID`, `InvoiceID`, `PurchaseID` | CreditCard |
@@ -423,13 +424,13 @@ cargo test
 
 ## Integration Guide
 
-Frontends consume `zxc-money` through **facades** (one per bounded context) and implement **provider traits** for infrastructure.
+Frontends consume `zxcq-money` through **facades** (one per bounded context) and implement **provider traits** for infrastructure.
 
 ### 1. Add dependency
 
 ```toml
 [dependencies]
-zxc-money = { path = "../zxc-money" }
+zxcq-money = { path = "../zxcq-money" }
 ```
 
 ### 2. Implement provider traits
@@ -487,7 +488,7 @@ let account_id = facade.open_account(OpenAccountCommand {
 ### Available provider traits
 
 | Trait | Purpose | Implement with |
-|-------|---------|---------------|
+| ------- | --------- | --------------- |
 | `DateTimeProvider` | Current time | `SystemDateTime` (default) |
 | `IdGenerator` | UUID generation | `UuidGenerator` (default) |
 | `NotificationProvider` | Push/email alerts | Firebase, OneSignal, SMTP |
@@ -497,7 +498,7 @@ let account_id = facade.open_account(OpenAccountCommand {
 ### Available facades
 
 | Facade | Bounded Context |
-|--------|----------------|
+| -------- | ---------------- |
 | `LedgerFacade` | Accounts, transactions, transfers, recurring |
 | `CreditCardFacade` | Cards, invoices, purchases |
 | `BillsFacade` | Bill reminders |
@@ -513,7 +514,7 @@ let account_id = facade.open_account(OpenAccountCommand {
 Every operation (commands and queries) requires a `Principal` — injected by the frontend, never constructed by the core.
 
 | Mechanism | Description |
-|-----------|-------------|
+| ----------- | ------------- |
 | **Principal** | Every handler/query receives `Principal { user_id, roles, session_id }` |
 | **Ownership validation** | Command handlers validate `aggregate.owner_id == principal.user_id` before any mutation |
 | **Query scoping** | Query handlers receive `Principal` — bills/investment filter by owner, reporting stores are global (per-user scoping planned) |
@@ -541,7 +542,7 @@ let account_id = facade.open_account(OpenAccountCommand {
 ## Dependencies
 
 | Crate | Purpose |
-|-------|---------|
+| ------- | --------- |
 | `serde` / `serde_json` | Serialization |
 | `chrono` | Date/time types |
 | `uuid` | UUID generation (v4) |
@@ -555,7 +556,7 @@ let account_id = facade.open_account(OpenAccountCommand {
 ## Milestones
 
 | # | Milestone | Status |
-|---|-----------|--------|
+| --- | ----------- | -------- |
 | M0 | Crate setup, shared types, event system | ✅ |
 | M1 | Ledger core (accounts, transactions, transfers, reconciliation) | ✅ |
 | M2 | Recurring transactions | ✅ |

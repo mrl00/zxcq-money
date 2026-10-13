@@ -10,7 +10,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use zxc_money::shared::events::InMemoryEventDispatcher;
+//! use zxcq_money::shared::events::InMemoryEventDispatcher;
 //!
 //! let dispatcher = InMemoryEventDispatcher::new();
 //! dispatcher.register_handler("InvoicePaid", |event| {
@@ -108,7 +108,7 @@ pub trait EventHandler<E: DomainEvent>: Send + Sync {
 /// # Example
 ///
 /// ```ignore
-/// use zxc_money::shared::events::InMemoryEventDispatcher;
+/// use zxcq_money::shared::events::InMemoryEventDispatcher;
 ///
 /// let dispatcher = InMemoryEventDispatcher::new();
 /// dispatcher.register_handler("TransactionRecorded", |event| {

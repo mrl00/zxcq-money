@@ -11,7 +11,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use zxc_money::shared::money::{Money, Currency};
+//! use zxcq_money::shared::money::{Money, Currency};
 //!
 //! let price = Money::new(dec!(49.90), Currency::BRL);  // R$ 49,90
 //! let tax   = Money::new(dec!(9.98),  Currency::BRL);  // R$  9,98
@@ -256,7 +256,7 @@ impl Money {
     /// # Examples
     ///
     /// ```
-    /// use zxc_money::shared::money::{Currency, Money};
+    /// use zxcq_money::shared::money::{Currency, Money};
     /// use rust_decimal_macros::dec;
     ///
     /// let m = Money::new(dec!(1234.56), Currency::BRL);
@@ -277,7 +277,7 @@ impl Money {
     /// # Examples
     ///
     /// ```
-    /// use zxc_money::shared::money::{Currency, Money};
+    /// use zxcq_money::shared::money::{Currency, Money};
     /// use rust_decimal_macros::dec;
     ///
     /// let m = Money::new(dec!(10.00), Currency::USD);
@@ -302,7 +302,7 @@ impl Money {
     /// # Examples
     ///
     /// ```
-    /// use zxc_money::shared::money::{Currency, Money};
+    /// use zxcq_money::shared::money::{Currency, Money};
     /// use rust_decimal_macros::dec;
     ///
     /// let m = Money::new(dec!(100.00), Currency::USD);
@@ -329,7 +329,7 @@ impl Money {
     /// # Examples
     ///
     /// ```
-    /// use zxc_money::shared::money::{Currency, Money};
+    /// use zxcq_money::shared::money::{Currency, Money};
     /// use rusty_money::Round;
     /// use rust_decimal_macros::dec;
     ///
@@ -348,7 +348,7 @@ impl Money {
     /// # Examples
     ///
     /// ```
-    /// use zxc_money::shared::money::{Currency, Money};
+    /// use zxcq_money::shared::money::{Currency, Money};
     /// use rusty_money::{Exchange, ExchangeRate};
     /// use rust_decimal_macros::dec;
     ///

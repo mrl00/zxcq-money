@@ -10,7 +10,7 @@ use uuid::Uuid;
 /// # Example
 ///
 /// ```ignore
-/// use zxc_money::provider::id::{IdGenerator, UuidGenerator};
+/// use zxcq_money::provider::id::{IdGenerator, UuidGenerator};
 ///
 /// let gen = UuidGenerator;
 /// let id = gen.new_id(); // random UUID v4

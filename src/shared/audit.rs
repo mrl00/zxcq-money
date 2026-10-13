@@ -102,7 +102,7 @@ impl AuditLogger for InMemoryAuditLogger {
 ///
 /// ```ignore
 /// use std::sync::Arc;
-/// use zxc_money::shared::audit::{AuditEventHandler, InMemoryAuditLogger};
+/// use zxcq_money::shared::audit::{AuditEventHandler, InMemoryAuditLogger};
 ///
 /// let logger = Arc::new(InMemoryAuditLogger::new());
 /// let handler = AuditEventHandler::new(logger.clone());

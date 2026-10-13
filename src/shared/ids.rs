@@ -8,7 +8,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use zxc_money::shared::ids::AccountID;
+//! use zxcq_money::shared::ids::AccountID;
 //!
 //! let id = AccountID::new();          // random UUID v4
 //! let id2 = AccountID::from_uuid(uuid); // wrap existing UUID

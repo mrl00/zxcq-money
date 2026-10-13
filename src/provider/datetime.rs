@@ -9,7 +9,7 @@ use chrono::{DateTime, Utc};
 /// # Example
 ///
 /// ```ignore
-/// use zxc_money::provider::datetime::{DateTimeProvider, SystemDateTime};
+/// use zxcq_money::provider::datetime::{DateTimeProvider, SystemDateTime};
 ///
 /// let provider = SystemDateTime;
 /// let now = provider.now();

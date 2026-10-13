@@ -4,11 +4,11 @@
 
 use rust_decimal::Decimal;
 use rust_decimal::prelude::ToPrimitive;
-use zxc_money::planning::loan::simulate_loan;
-use zxc_money::planning::mortgage::{AmortizationMethod, simulate_mortgage};
-use zxc_money::planning::net_salary::{TaxRegime, calculate_net_salary};
-use zxc_money::planning::retirement::{required_contribution, simulate_retirement};
-use zxc_money::shared::money::{Currency, Money};
+use zxcq_money::planning::loan::simulate_loan;
+use zxcq_money::planning::mortgage::{AmortizationMethod, simulate_mortgage};
+use zxcq_money::planning::net_salary::{TaxRegime, calculate_net_salary};
+use zxcq_money::planning::retirement::{required_contribution, simulate_retirement};
+use zxcq_money::shared::money::{Currency, Money};
 
 fn main() {
     let brl = Currency::BRL;

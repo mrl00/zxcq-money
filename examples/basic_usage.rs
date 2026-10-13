@@ -2,12 +2,12 @@
 //!
 //! Run with: `cargo run --example basic_usage`
 
-use zxc_money::ledger::domain::account::AccountType;
-use zxc_money::ledger::domain::repository::{AccountRepository, TransactionRepository};
-use zxc_money::ledger::domain::transaction::TransactionType;
-use zxc_money::shared::ids::{AccountID, TransactionID, UserID};
-use zxc_money::shared::mock::{MockAccountRepository, MockTransactionRepository};
-use zxc_money::shared::money::{Currency, Money};
+use zxcq_money::ledger::domain::account::AccountType;
+use zxcq_money::ledger::domain::repository::{AccountRepository, TransactionRepository};
+use zxcq_money::ledger::domain::transaction::TransactionType;
+use zxcq_money::shared::ids::{AccountID, TransactionID, UserID};
+use zxcq_money::shared::mock::{MockAccountRepository, MockTransactionRepository};
+use zxcq_money::shared::money::{Currency, Money};
 
 #[tokio::main]
 async fn main() {
@@ -16,7 +16,7 @@ async fn main() {
     let owner = UserID::new();
 
     // Create a checking account
-    let account = zxc_money::ledger::domain::account::Account::new(
+    let account = zxcq_money::ledger::domain::account::Account::new(
         AccountID::new(),
         owner,
         "Nubank Checking".into(),
@@ -30,7 +30,7 @@ async fn main() {
     println!("Created account: {} (id: {})", account.name, account.id);
 
     // Record a salary income
-    let salary = zxc_money::ledger::domain::transaction::Transaction::new(
+    let salary = zxcq_money::ledger::domain::transaction::Transaction::new(
         TransactionID::new(),
         account.id,
         TransactionType::Income,
@@ -47,7 +47,7 @@ async fn main() {
     );
 
     // Record an expense
-    let grocery = zxc_money::ledger::domain::transaction::Transaction::new(
+    let grocery = zxcq_money::ledger::domain::transaction::Transaction::new(
         TransactionID::new(),
         account.id,
         TransactionType::Expense,
@@ -64,7 +64,7 @@ async fn main() {
     );
 
     // Query transactions for the account
-    let period = zxc_money::shared::period::Period::new(
+    let period = zxcq_money::shared::period::Period::new(
         chrono::NaiveDate::from_ymd_opt(2026, 1, 1).unwrap(),
         chrono::NaiveDate::from_ymd_opt(2026, 1, 31).unwrap(),
     );

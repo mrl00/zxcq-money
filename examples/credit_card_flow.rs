@@ -3,12 +3,12 @@
 //! Run with: `cargo run --example credit_card_flow`
 
 use rust_decimal::prelude::ToPrimitive;
-use zxc_money::credit_card::domain::card::CreditCard;
-use zxc_money::credit_card::domain::invoice::Invoice;
-use zxc_money::credit_card::domain::purchase::Purchase;
-use zxc_money::shared::ids::{CategoryID, CreditCardID, InvoiceID, PurchaseID, UserID};
-use zxc_money::shared::money::{Currency, Money};
-use zxc_money::shared::period::YearMonth;
+use zxcq_money::credit_card::domain::card::CreditCard;
+use zxcq_money::credit_card::domain::invoice::Invoice;
+use zxcq_money::credit_card::domain::purchase::Purchase;
+use zxcq_money::shared::ids::{CategoryID, CreditCardID, InvoiceID, PurchaseID, UserID};
+use zxcq_money::shared::money::{Currency, Money};
+use zxcq_money::shared::period::YearMonth;
 
 #[tokio::main]
 async fn main() {
